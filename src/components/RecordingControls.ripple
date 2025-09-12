@@ -1,13 +1,28 @@
 export default component RecordingControls() {
 	let $isRecording = false;
 
-	<section><button type='button' aria-label={$isRecording ? 'Stop' : 'Start'} onClick={() => $isRecording = !$isRecording}>{$isRecording ? 'Stop' : 'Start'}</button></section>
+	<section>
+		<button id='main_button' type='button' $aria-label={$isRecording ? 'Stop' : 'Start'} onClick={() => $isRecording = !$isRecording} $style={`
+				background: ${$isRecording ? '#E8E8E8' : '#FF4421'};
+			`}><img $src={$isRecording ? '/icons/paused.svg' : '/icons/start.svg'} alt='' /></button>
+		{''}
+	</section>
 
 	<style>
 	  section {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+		}
+		  #main_button {
+			display: flex;
+			width: 50px;
+			height: 50px;
+			text-align: center;
+			justify-content: center;
+			align-items: center;
+			border: none;
+			border-radius: 50%;
 		}
 	</style>
 }
