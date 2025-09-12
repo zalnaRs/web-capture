@@ -1,27 +1,79 @@
 :root {
-    --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
-    --background: #fcfcfc;
-    --foreground: #000;
+	--rounded-1: 4px;
+	--rounded-full: 50%;
+
+	--ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+
+	--background-1: #fcfcfc;
+	--foreground: #000;
+	--background-2: #dddddd;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: all 0.1s var(--ease-in-out-expo);
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-html, body {
-    width: 100%;
-    min-height: 100vh;
-    background: var(--background);
-    color: var(--foreground);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Adwaita Sans', Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+html,
+body {
+	width: 100%;
+	min-height: 100vh;
+	background: var(--background-1);
+	color: var(--foreground);
+	font-family:
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		Roboto,
+		Oxygen,
+		Ubuntu,
+		'Adwaita Sans',
+		Cantarell,
+		'Open Sans',
+		'Helvetica Neue',
+		sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 button {
-    cursor: pointer;
+	cursor: pointer;
+	transition: all 0.1s var(--ease-in-out-expo);
+}
+
+/* FIXME: move these to their respective components, can't do that right now */
+
+#preview {
+	aspect-ratio: 16/9;
+	width: 100%;
+	max-height: 80%;
+	border-radius: var(--rounded-1);
+	background: var(--background-2);
+	margin-bottom: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	transition: all 0.4s var(--ease-in-out-expo);
+
+	&:hover {
+		filter: brightness(0.9);
+
+		& img {
+			width: 48px;
+		}
+	}
+
+	&:active {
+		filter: brightness(0.8);
+	}
+
+	& img {
+		transition: all 0.4s var(--ease-in-out-expo);
+		width: 32px;
+	}
 }

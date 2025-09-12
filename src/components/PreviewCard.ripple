@@ -4,14 +4,13 @@ import type { Context } from '../types.d';
 
 export default component PreviewCard(props: { $context: Context }) {
 	<Card>
-		<div id='preview'><h2>{'Select a screen to record'}</h2></div>
+		<div id='preview'>
+			if (props.$context.$selectedSource) {
+				<p>{'TODO: implement'}</p>
+			} else {
+				<img src="/icons/select_window.svg" alt="Select a source to record" />
+			}
+		</div>
 		<RecordingControls $context={props.$context} />
 	</Card>
-
-	<style>
-	  #preview {
-			aspect-ratio: 16/9;
-			width: 60%;
-		}
-	</style>
 }
