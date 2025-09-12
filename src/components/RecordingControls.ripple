@@ -1,10 +1,10 @@
-export default component RecordingControls() {
-	let $isRecording = false;
+import type { Context } from '../types.d';
 
+export default component RecordingControls(props: { $context: Context }) {
 	<section>
-		<button id='main_button' type='button' $aria-label={$isRecording ? 'Stop' : 'Start'} onClick={() => $isRecording = !$isRecording} $style={`
-				background: ${$isRecording ? '#E8E8E8' : '#FF4421'};
-			`}><img $src={$isRecording ? '/icons/paused.svg' : '/icons/start.svg'} alt='' /></button>
+		<button id='main_button' type='button' $aria-label={props.$isRecording ? 'Stop' : 'Start'} onClick={() => props.$context.$isRecording = !props.$context.$isRecording} $style={`
+				background: ${props.$context.$isRecording ? '#E8E8E8' : '#FF4421'};
+			`}><img $src={props.$context.$isRecording ? '/icons/paused.svg' : '/icons/start.svg'} alt='' /></button>
 		{''}
 	</section>
 

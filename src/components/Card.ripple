@@ -1,0 +1,11 @@
+export default component Card(props: { $children: Component }) {
+	<div><props.$children /></div>
+
+	<style>
+	  div {
+			padding: 12px;
+			border-radius: 12px;
+			box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+		}
+	</style>
+}

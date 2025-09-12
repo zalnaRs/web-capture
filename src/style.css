@@ -1,0 +1,27 @@
+:root {
+    --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+    --background: #fcfcfc;
+    --foreground: #000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.1s var(--ease-in-out-expo);
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Adwaita Sans', Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+}

@@ -1,8 +1,26 @@
 import RecordingControls from './components/RecordingControls.ripple';
+import PreviewCard from './components/PreviewCard.ripple';
+import type { Context } from './types.d';
 
 export component App() {
+	let context: Context = {
+		$isRecording: false,
+	};
+
 	<main>
 		<h1>{'Web Capture'}</h1>
-		<RecordingControls />
+		<PreviewCard $context={context} />
 	</main>
+
+	/* <SettingsCard /> */
+	<style>
+	  main {
+			padding: 12px;
+			margin: auto 0;
+			max-width: 1280px;
+		}
+		  h1 {
+			margin-bottom: 12px;
+		}
+	</style>
 }
