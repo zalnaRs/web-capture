@@ -4,7 +4,8 @@ import type { Context } from '../types.d';
 
 export default component PreviewCard(props: { $context: Context }) {
 	<Card>
-		<div id='preview'>
+	     /* the global CSS wins. -> style.css */
+		<div id='preview' style="background:#1e90ff; padding:16px; border-radius:12px;">
 			if (props.$context.$selectedSource) {
 				<p>{'TODO: implement'}</p>
 			} else {
