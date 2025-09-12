@@ -1,3 +1,8 @@
+import RecordingControls from './components/RecordingControls.ripple';
+
 export component App() {
-	<main><h1>{'Web Capture'}</h1></main>
+	<main>
+		<h1>{'Web Capture'}</h1>
+		<RecordingControls />
+	</main>
 }

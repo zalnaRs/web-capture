@@ -1,0 +1,13 @@
+export default component RecordingControls() {
+	let $isRecording = false;
+
+	<section><button type='button' aria-label={$isRecording ? 'Stop' : 'Start'} onClick={() => $isRecording = !$isRecording}>{$isRecording ? 'Stop' : 'Start'}</button></section>
+
+	<style>
+	  section {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+}
