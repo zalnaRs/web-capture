@@ -10,9 +10,10 @@ export default component PreviewCard(props: { $context: Context, $settings: Sett
 			}}>
 			if (props.$context.$selectedSource?.active) {
 				try {
-					// RecordingAPI.startPreview(props.$context.$selectedSource).then((url) => props.$context.$previewURL = url);
-
 					<video srcObject={props.$context.$selectedSource} autoplay={true}></video>
+					<button id='stop-preview-button' class="danger" type="button" onClick={() => {
+						setTimeout(() => props.$context.$selectedSource = undefined, 100);
+					}}>{'Stop preview'}</button>
 				} catch (err) {
 					<div id="alert">
 						<img src='/icons/error.svg' alt='' />

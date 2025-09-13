@@ -1,6 +1,7 @@
 export interface Context {
 	$selectedSource?: MediaStream;
 	$isRecording: boolean;
+	$isPaused: boolean;
 	$previewURL?: string;
 }
 
@@ -9,4 +10,6 @@ export interface Settings {
 	$fps: number;
 	$audioBitrate: number;
 	$mimeType: string;
+
+	$skipCountdown: boolean;
 }

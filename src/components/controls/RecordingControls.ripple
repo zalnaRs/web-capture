@@ -2,27 +2,64 @@ import type { Context, Settings } from '../../types.d';
 import RecordingAPI from '../../lib/index'
 
 export default component RecordingControls(props: { $context: Context, $settings: Settings }) {
+	let $countdown = 0;
+
 	<section>
 		<button
-			id='main_button'
+			id='main-button'
 			type='button'
 			$aria-label={props.$isRecording ? 'Stop' : 'Start'}
 			onClick={() => {
 				if (!props.$context.$isRecording) {
-					RecordingAPI.startRecording(props.$context.$selectedSource, props.$settings);
-					props.$context.$isRecording = true;
+					let interval;
+					if (!props.$settings.$skipCountdown) {
+						$countdown = 3;
+						interval = setInterval(() => {
+							$countdown--;
+						}, 1000);
+					}
+					setTimeout(() => {
+						if (interval) clearInterval(interval);
+						RecordingAPI.startRecording(props.$context.$selectedSource, props.$settings);
+						props.$context.$isRecording = true;
+						props.$context.$isPaused = false;
+					}, !props.$settings.$skipCountdown ? 3200 : 100)
 				} else {
-					RecordingAPI.stopRecording();
-					props.$context.$isRecording = false;
+					if (props.$context.$isPaused) {
+						RecordingAPI.resumeRecording();
+						props.$context.$isPaused = false;
+					} else {
+						RecordingAPI.pauseRecording();
+						props.$context.$isPaused = true;
+					}
 				}
 			}}
 			$style={`
-				background: ${props.$context.$isRecording ? '#E8E8E8' : '#FF4421'};
+				background: ${props.$context.$isRecording ? props.$context.$isPaused ? '#ffa9a9' : '#E8E8E8' : '#FF4421'};
 			`}
 			$disabled={!props.$context.$selectedSource?.active}
 		>
-			<img $src={props.$context.$isRecording ? '/icons/paused.svg' : '/icons/start.svg'} alt='' />
+			if ($countdown != 0) {
+				<strong>{$countdown}</strong>
+			} else {
+				<img $src={props.$context.$isRecording ? props.$context.$isPaused ? '/icons/resume.svg' : "/icons/paused.svg" : '/icons/start.svg'} alt='' />
+			}
 		</button>
+		if (props.$context.$isRecording) {
+			<button
+				class="icon-button"
+				id="stop_button"
+				type="button"
+				aria-label='Stop & save'
+				onClick={() => {
+					RecordingAPI.stopRecording();
+					props.$context.$isRecording = false;
+				}}
+				style="background: var(--background-3);border-radius:var(--rounded-1);"
+			>
+				<img src="/icons/close.svg" alt="Stop & save" />
+			</button>
+		}
 	</section>
 
 	<style>
@@ -30,24 +67,27 @@ export default component RecordingControls(props: { $context: Context, $settings
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			gap: 12px;
 		}
-		#main_button {
-			display: flex;
+		#main-button {
 			width: 50px;
 			height: 50px;
-			text-align: center;
-			justify-content: center;
-			align-items: center;
 			border: none;
+			outline: none;
 			border-radius: var(--rounded-full);
 		}
 
-		#main_button:active {
+		#main-button:active {
 			transform: scale(1.2);
 		}
 
-		#main_button:disabled {
+		#main-button:disabled {
 			opacity: 0.1;
+		}
+
+		#main-button strong {
+			color: var(--white);
+			font-size: 16px;
 		}
 	</style>
 }

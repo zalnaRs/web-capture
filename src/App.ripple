@@ -8,6 +8,7 @@ export component App() {
 		let context: Context = {
 			$selectedSource: undefined,
 			$isRecording: false,
+			$isPaused: false,
 			$previewURL: undefined,
 		};
 
@@ -15,7 +16,9 @@ export component App() {
 			$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
 			$fps: 60,
 			$audioBitrate: 160 * 1000, // 160 Kpbs
-			$mimeType: "video/webm"
+			$mimeType: "video/webm",
+
+			$skipCountdown: false
 		}
 
 		let firstRun = true;
@@ -34,7 +37,7 @@ export component App() {
 		}
 		
 		effect(() => {
-			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps); // required as Ripple doesn't allow objects to be reactive
+			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps, settings.$skipCountdown); // required as Ripple doesn't allow objects to be reactive
 			localStorage.setItem("settings", JSON.stringify(settings));
 		})
 

@@ -1,12 +1,18 @@
 :root {
+	--white: #fff;
+	--black: #000;
+
 	--rounded-1: 4px;
 	--rounded-full: 50%;
 
 	--ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
 
 	--background-1: #fcfcfc;
+	--background-2: #e8e8e8;
+	--background-3: #dddddd;
+	--background-4: #dedede;
 	--foreground: #000;
-	--background-2: #dddddd;
+	--background-danger: #e82828;
 }
 
 * {
@@ -42,6 +48,46 @@ body {
 button {
 	cursor: pointer;
 	transition: all 0.1s var(--ease-in-out-expo);
+
+	border: none;
+	outline: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: var(--rounded-1);
+	padding: 8px 18px;
+	background: var(--background-4);
+
+	&:hover {
+		filter: brightness(0.9);
+	}
+
+	&:active {
+		filter: brightness(0.8);
+	}
+
+	&.danger {
+		background: var(--background-danger);
+		color: var(--white);
+	}
+
+	&.icon-button {
+		background: transparent;
+		border: none;
+		outline: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
+
+		&:hover {
+			filter: brightness(1.1);
+		}
+
+		&:active {
+			filter: invert(1);
+		}
+	}
 }
 
 /* FIXME: move these to their respective components, can't do that right now */
@@ -49,11 +95,11 @@ button {
 #preview {
 	aspect-ratio: 16/9;
 	width: 100%;
-	max-height: 80%;
 	margin-bottom: 16px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 
 	& video {
 		width: 100%;
@@ -71,7 +117,8 @@ button {
 		gap: 4px;
 		border-radius: var(--rounded-1);
 		transition: all 0.4s var(--ease-in-out-expo);
-		background: var(--background-2);
+		background: var(--background-3);
+		padding: 0 12px;
 
 		&:hover {
 			filter: brightness(0.9);
@@ -86,6 +133,13 @@ button {
 			transition: all 0.4s var(--ease-in-out-expo);
 			width: 32px;
 		}
+	}
+
+	& #stop-preview-button {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 24px;
 	}
 }
 
@@ -106,23 +160,6 @@ dialog::backdrop {
 	align-items: center;
 	background: rgba(250, 250, 250, 0.8);
 	backdrop-filter: blur(2px);
-}
-
-.icon-button {
-	background: transparent;
-	border: none;
-	outline: none;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	&:hover {
-		filter: brightness(1.1);
-	}
-
-	&:active {
-		filter: invert(1);
-	}
 }
 
 .help-dialog {

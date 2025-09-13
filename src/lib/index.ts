@@ -41,8 +41,16 @@ const startRecording = async (stream: MediaStream, settings: Settings) => {
 	mediaRecorder.start();
 };
 
+const pauseRecording = async () => {
+	mediaRecorder.pause();
+};
+
 const stopRecording = async () => {
 	mediaRecorder.stop();
+};
+
+const resumeRecording = async () => {
+	mediaRecorder.resume();
 };
 
 const selectSource = async (settings: Settings): Promise<MediaStream> => {
@@ -61,6 +69,8 @@ const RecordingAPI = {
 	selectSource,
 	startRecording,
 	stopRecording,
+	pauseRecording,
+	resumeRecording,
 	properties: {
 		startTime,
 	},

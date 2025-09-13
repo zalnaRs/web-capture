@@ -1,0 +1,24 @@
+export default component Checkbox(props: { $disabled?: boolean, id: string, $label: string, onChange: (v: Number) => void, $value: Number }) {
+    <div id="checkbox">
+        <label for={props.id}>{props.$label}</label>
+        <input
+            type="checkbox"
+            id={props.id}
+            name={props.id}
+            $checked={props.$value}
+            onChange={(e) => props.onChange(e.target.checked ?? 0)}
+            $disabled={props.$disabled}
+        />
+    </div>
+
+    <style>
+    #checkbox {
+        display: flex;
+        gap: 4px;
+    }
+
+    #checkbox label {
+        flex: 1;
+    }
+    </style>
+}

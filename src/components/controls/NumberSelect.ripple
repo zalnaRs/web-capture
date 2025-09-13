@@ -1,11 +1,11 @@
-export default component NumberSelect(props: { id: string, min: Number, max: Number, label: string, onChange: (v: Number) => void, $value: Number, help?: string }) {
+export default component NumberSelect(props: { $disabled?: boolean, id: string, min: Number, max: Number, $label: string, onChange: (v: Number) => void, $value: Number, help?: string }) {
     let $helpDialog;
     
-    <div id="number_select">
+    <div id="number-select">
         if (props.help) { 
             <div id="help-label">
-                <label for={props.id + "-number"}>{props.label}</label>
-                <button type="button" aria-label={`What does ${props.label} mean?`} class="icon-button" onClick={() => $helpDialog.showModal()}>
+                <label for={props.id + "-number"}>{props.$label}</label>
+                <button type="button" aria-label={`What does ${props.$label} mean?`} class="icon-button" onClick={() => $helpDialog.showModal()}>
                     <img src="/icons/help.svg" alt='help' width="20" height="20" />
                 </button>
                 <dialog class="help-dialog" closedBy="any" {@use (node) => {
@@ -13,7 +13,7 @@ export default component NumberSelect(props: { id: string, min: Number, max: Num
                     return () => $helpDialog = null;
                 }}>
                     <form method="dialog">
-                        <h3>{`What does ${props.label} mean?`}</h3>
+                        <h3>{`What does ${props.$label} mean?`}</h3>
                         <button type="submit" class="icon-button">
                             <img src="/icons/close.svg" alt="Close" />
                         </button>
@@ -24,7 +24,7 @@ export default component NumberSelect(props: { id: string, min: Number, max: Num
                 </dialog>
             </div>
         } else {
-            <label for={props.id + "-number"}>{props.label}</label>
+            <label for={props.id + "-number"}>{props.$label}</label>
         }
         <div id="input">
             <input
@@ -35,6 +35,7 @@ export default component NumberSelect(props: { id: string, min: Number, max: Num
                 max={props.max}
                 $value={props.$value}
                 onChange={(e) => props.onChange(e.target.value ?? 0)}
+                $disabled={props.$disabled}
             />
             <input
                 type="number"
@@ -44,12 +45,13 @@ export default component NumberSelect(props: { id: string, min: Number, max: Num
                 max={props.max}
                 $value={props.$value}
                 onChange={(e) => props.onChange(e.target.value ?? 0)}
+                $disabled={props.$disabled}
             />
         </div>
     </div>
 
     <style>
-    #number_select {
+    #number-select {
         display: flex;
         flex-direction: column;
         gap: 4px;
