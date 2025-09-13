@@ -1,0 +1,51 @@
+import type { Context, Settings } from '../../types.d';
+import mimeTypes from '../../lib/mediatypes';
+import Admonition from '../Admonition.ripple';
+import { isFirefox } from '../../lib/utils';
+import HelpDialog from '../HelpDialog.ripple';
+import { codecHelp } from '../../lib/help';
+
+export default component CodecSelect(props: { $context: Context, $settings: Settings }) {
+    if (isFirefox) {
+        <Admonition type="warning">
+            <p>{"Firefox's audio recording doesn't work, only VP8 video in .webm is supported."}</p>
+        </Admonition>
+    } else {
+        <div id="codec-select">
+            <div id="help-label">
+                <label for="codec-select">{'Containers and Codecs'}</label>
+                <HelpDialog topic="Containers and Codecs">
+                    <p>{codecHelp}</p>
+                </HelpDialog>
+            </div>
+            <select
+                id="codec-select"
+                $value={props.$settings.$mimeType}
+                onChange={(e) => props.$settings.$mimeType = e.target.value}
+            >
+                for (const setting of mimeTypes) {
+                    if (MediaRecorder.isTypeSupported(setting.mimeType)) {
+                        if (!props.$settings.$mimeType) {
+                            props.$settings.$mimeType = setting.mimeType;
+                        }
+                        <option value={setting.mimeType}>{`${setting.video}+${setting.audio} in ${setting.container}`}</option>
+                    }
+                }
+            </select>
+        </div>
+    }
+
+    <style>
+    #codec-select {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    #help-label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    </style>
+}

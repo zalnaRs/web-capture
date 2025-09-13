@@ -1,33 +1,20 @@
+import HelpDialog from '../HelpDialog.ripple';
+
 export default component NumberSelect(props: { $disabled?: boolean, id: string, min: Number, max: Number, $label: string, onChange: (v: Number) => void, $value: Number, help?: string }) {
-    let $helpDialog;
-    
     <div id="number-select">
         if (props.help) { 
             <div id="help-label">
                 <label for={props.id + "-number"}>{props.$label}</label>
-                <button type="button" aria-label={`What does ${props.$label} mean?`} class="icon-button" onClick={() => $helpDialog.showModal()}>
-                    <img src="/icons/help.svg" alt='help' width="20" height="20" />
-                </button>
-                <dialog class="help-dialog" closedBy="any" {@use (node) => {
-                    $helpDialog = node;
-                    return () => $helpDialog = null;
-                }}>
-                    <form method="dialog">
-                        <h3>{`What does ${props.$label} mean?`}</h3>
-                        <button type="submit" class="icon-button">
-                            <img src="/icons/close.svg" alt="Close" />
-                        </button>
-                    </form>
-                    <article>
-                        {props.help}
-                    </article>
-                </dialog>
+                <HelpDialog topic={props.$label}>
+                    <p>{props.help}</p>
+                </HelpDialog>
             </div>
         } else {
             <label for={props.id + "-number"}>{props.$label}</label>
         }
         <div id="input">
             <input
+                class="range"
                 type="range"
                 id={props.id}
                 name={props.id}
@@ -63,7 +50,7 @@ export default component NumberSelect(props: { $disabled?: boolean, id: string, 
         width: 100%;
     }
 
-    #input input {
+    #input .range {
         flex: 1;
     }
 

@@ -10,7 +10,7 @@ export default component PreviewCard(props: { $context: Context, $settings: Sett
 			}}>
 			if (props.$context.$selectedSource?.active) {
 				try {
-					<video srcObject={props.$context.$selectedSource} autoplay={true}></video>
+					<video muted={true} srcObject={props.$context.$selectedSource} autoplay={true}></video>
 					<button id='stop-preview-button' class="danger" type="button" onClick={() => {
 						setTimeout(() => props.$context.$selectedSource = undefined, 100);
 					}}>{'Stop preview'}</button>

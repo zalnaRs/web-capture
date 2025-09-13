@@ -1,4 +1,5 @@
 import { Settings } from '../types';
+import { isFirefox } from './utils';
 
 let recordedChunks = [];
 let startTime: Number;
@@ -11,7 +12,7 @@ const startRecording = async (stream: MediaStream, settings: Settings) => {
 	mediaRecorder = new MediaRecorder(stream, {
 		videoBitsPerSecond: settings.$videoBitrate,
 		audioBitsPerSecond: settings.$audioBitrate,
-		mimeType: settings.$mimeType,
+		mimeType: isFirefox ? 'video/webm' : settings.$mimeType,
 	});
 
 	mediaRecorder.ondataavailable = (ev) => {
@@ -59,7 +60,9 @@ const selectSource = async (settings: Settings): Promise<MediaStream> => {
 		video: {
 			frameRate: settings.$fps,
 		},
-		audio: true,
+		audio: {
+			echoCancellation: false,
+		},
 	});
 
 	return stream;

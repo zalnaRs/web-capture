@@ -9,7 +9,7 @@ export interface Settings {
 	$videoBitrate: number;
 	$fps: number;
 	$audioBitrate: number;
-	$mimeType: string;
+	$mimeType?: string;
 
 	$skipCountdown: boolean;
 }

@@ -12,6 +12,9 @@
 	--background-3: #dddddd;
 	--background-4: #dedede;
 	--foreground: #000;
+
+	--background-info: #3b91f4;
+	--background-warning: #ffe70e;
 	--background-danger: #e82828;
 }
 

@@ -1,0 +1,23 @@
+import type { Component } from 'ripple';
+
+export default component HelpDialog(props: { $children: Component, topic: string }) {
+    let $helpDialog;
+
+    <button type="button" aria-label={`What does ${props.topic} mean?`} class="icon-button" onClick={() => $helpDialog.showModal()}>
+        <img src="/icons/help.svg" alt='help' width="20" height="20" />
+    </button>
+    <dialog class="help-dialog" closedBy="any" {@use (node) => {
+        $helpDialog = node;
+        return () => $helpDialog = null;
+    }}>
+        <form method="dialog">
+            <h3>{`What does ${props.topic} mean?`}</h3>
+            <button type="submit" class="icon-button">
+                <img src="/icons/close.svg" alt="Close" />
+            </button>
+        </form>
+        <article>
+            <props.$children />
+        </article>
+    </dialog>
+}

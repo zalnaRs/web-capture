@@ -16,7 +16,7 @@ export component App() {
 			$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
 			$fps: 60,
 			$audioBitrate: 160 * 1000, // 160 Kpbs
-			$mimeType: "video/webm",
+			$mimeType: undefined,
 
 			$skipCountdown: false
 		}
@@ -30,10 +30,21 @@ export component App() {
 				settings.$videoBitrate = saved_settings.$videoBitrate;
 				settings.$audioBitrate = saved_settings.$audioBitrate;
 				settings.$mimeType = saved_settings.$mimeType;
+				settings.$fps = saved_settings.$fps;
+				settings.$skipCountdown = saved_settings.$skipCountdown;
+
 				firstRun = false;
 			};
 		} catch (err) {
 			console.warn("Couldn't load saved settings");
+			settings = {
+				$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
+				$fps: 60,
+				$audioBitrate: 160 * 1000, // 160 Kpbs
+				$mimeType: undefined,
+
+				$skipCountdown: false
+			};
 		}
 		
 		effect(() => {
