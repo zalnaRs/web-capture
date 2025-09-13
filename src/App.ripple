@@ -36,6 +36,7 @@ export component App() {
 				firstRun = false;
 			};
 		} catch (err) {
+			localStorage.setItem("done-saving-settings", "0")
 			console.warn("Couldn't load saved settings");
 			settings = {
 				$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
@@ -50,6 +51,8 @@ export component App() {
 		effect(() => {
 			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps, settings.$skipCountdown); // required as Ripple doesn't allow objects to be reactive
 			localStorage.setItem("settings", JSON.stringify(settings));
+			if (localStorage.getItem("done-saving-settings") != "1") location.reload();
+			localStorage.setItem("done-saving-settings", "1");
 		})
 
 		<main>
@@ -81,6 +84,10 @@ export component App() {
 		</style>
 	} catch (err) {
 		console.error(err);
+
+		if (localStorage.getItem("done-saving-settings") == "1") {
+			window.location.reload();
+		}
 
 		<main class="screen-center">
 			<img src="/icons/error.svg" alt="" />
