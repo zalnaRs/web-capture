@@ -1,8 +1,13 @@
-# Ripple Basic Template
+# Web Capture
 
-A minimal Ripple application template with TypeScript and Vite.
+Web Capture allows you to record your screen inside your browsers without any external applications. This is very useful if you don't have the time to spin up OBS Studio or something more "complex" to capture a quick moment.
+It's also written in a Ripple (https://www.ripplejs.com/), which is a new fast frontend framework.
 
-## Getting Started
+## Future
+
+There is a lot of stuff to get working, like configuring settings, using ffmpeg-wasm to allow more codec settings (on Firefox).
+
+## Development
 
 1. Install dependencies:
 
@@ -21,29 +26,15 @@ A minimal Ripple application template with TypeScript and Vite.
     npm run build
     ```
 
-## Code Formatting
+### Code Formatting
 
-This template includes Prettier with the Ripple plugin for consistent code formatting.
-
-### Available Commands
-
-- `npm run format` - Format all files
-- `npm run format:check` - Check if files are formatted correctly
-
-### Configuration
-
-Prettier is configured in `.prettierrc` with the following settings:
-
-- Uses tabs for indentation
-- Single quotes for strings
-- 100 character line width
-- Includes the `prettier-plugin-ripple` for `.ripple` file formatting
+Don't use prettier on this project as it breaks a lot.
 
 ### VS Code Integration
 
 For the best development experience, install the [Prettier VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and the [Ripple VS Code extension](https://marketplace.visualstudio.com/items?itemName=ripplejs.ripple-vscode-plugin).
 
-## Learn More
+### Learn More
 
 - [Ripple Documentation](https://github.com/trueadm/ripple)
 - [Vite Documentation](https://vitejs.dev/)
