@@ -1,23 +1,32 @@
 import Card from './Card.ripple';
 import RecordingControls from './RecordingControls.ripple';
 import type { Context } from '../types.d';
-import RecordingAPI from '../lib/index'
+import RecordingAPI from '../lib/index';
 
 export default component PreviewCard(props: { $context: Context }) {
 	<Card>
-			<div id='preview' onClick={() => {
-				// TODO: switch to async, ripple bug
-				if (!props.$context.$selectedSource) 
-					RecordingAPI.selectSource().then((v) => props.$context.$selectedSource = v);
+		<div id='preview' onClick={() => {
+				if (!props.$context.$selectedSource) RecordingAPI.selectSource().then(v => props.$context.$selectedSource = v);
 			}}>
-				if (props.$context.$selectedSource?.active) {
-					<p>{'TODO: implement'}</p>
-				} else {
-					<div aria-role>
-						<img src="/icons/select_window.svg" alt="Select a source to record" />
+			if (props.$context.$selectedSource?.active) {
+				try {
+					// RecordingAPI.startPreview(props.$context.$selectedSource).then((url) => props.$context.$previewURL = url);
+
+					<video srcObject={props.$context.$selectedSource} autoplay={true}></video>
+				} catch (err) {
+					<div id="alert">
+						<img src='/icons/error.svg' alt='' />
+						<strong>{'Preview has crashed'}</strong>
 					</div>
 				}
-			</div>
+
+			} else {
+				<div id="alert">
+					<img src='/icons/select_window.svg' alt='Select a source to record' />
+					<strong>{'Select a source to continue'}</strong>
+				</div>
+			}
+		</div>
 		<RecordingControls $context={props.$context} />
 	</Card>
 }

@@ -7,6 +7,7 @@ export component App() {
 		let context: Context = {
 			$selectedSource: undefined,
 			$isRecording: false,
+			$previewURL: undefined
 		};
 
 		<main>
@@ -17,10 +18,10 @@ export component App() {
 
 		/* <SettingsCard /> */
 		<style>
-		main {
+			main {
 				padding: 12px;
 				margin: auto 0;
-				max-width: 1280px;
+				max-width: 840px;
 			}
 			h1 {
 				margin-bottom: 12px;
