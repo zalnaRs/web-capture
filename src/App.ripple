@@ -13,7 +13,7 @@ export component App() {
 		<main>
 			<h1>{'Web Capture'}</h1>
 			<PreviewCard $context={context} />
-			<button type="button" onClick={() => console.log(context)}>{'Debug'}</button>
+			{/* <button type="button" onClick={() => console.log(context)}>{'Debug'}</button> */}
 		</main>
 
 		/* <SettingsCard /> */
