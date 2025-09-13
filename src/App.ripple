@@ -82,7 +82,8 @@ export component App() {
 	} catch (err) {
 		console.error(err);
 
-		<main>
+		<main class="screen-center">
+			<img src="/icons/error.svg" alt="" />
 			<h1>{'An error happened!'}</h1>
 			<code>{err}</code>
 		</main>
