@@ -3,6 +3,11 @@
 Web Capture allows you to record your screen inside your browsers without any external applications. This is very useful if you don't have the time to spin up OBS Studio or something more "complex" to capture a quick moment.
 It's also written in a Ripple (https://www.ripplejs.com/), which is a new fast frontend framework.
 
+## Features
+
+- Preview a source (browser tab, window or screen)
+- Record in VP8 webm
+
 ## Future
 
 There is a lot of stuff to get working, like configuring settings, using ffmpeg-wasm to allow more codec settings (on Firefox).
