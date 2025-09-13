@@ -1,7 +1,7 @@
-import type { Context } from '../types.d';
-import RecordingAPI from '../lib/index'
+import type { Context, Settings } from '../../types.d';
+import RecordingAPI from '../../lib/index'
 
-export default component RecordingControls(props: { $context: Context }) {
+export default component RecordingControls(props: { $context: Context, $settings: Settings }) {
 	<section>
 		<button
 			id='main_button'
@@ -9,7 +9,7 @@ export default component RecordingControls(props: { $context: Context }) {
 			$aria-label={props.$isRecording ? 'Stop' : 'Start'}
 			onClick={() => {
 				if (!props.$context.$isRecording) {
-					RecordingAPI.startRecording(props.$context.$selectedSource);
+					RecordingAPI.startRecording(props.$context.$selectedSource, props.$settings);
 					props.$context.$isRecording = true;
 				} else {
 					RecordingAPI.stopRecording();

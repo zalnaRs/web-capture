@@ -1,12 +1,18 @@
+import { Settings } from '../types';
+
 let recordedChunks = [];
 let startTime: Number;
 
 let mediaRecorder: MediaRecorder;
 
-const startRecording = async (stream: MediaStream) => {
+const startRecording = async (stream: MediaStream, settings: Settings) => {
 	startTime = new Date().getTime();
 
-	mediaRecorder = new MediaRecorder(stream);
+	mediaRecorder = new MediaRecorder(stream, {
+		videoBitsPerSecond: settings.$videoBitrate,
+		audioBitsPerSecond: settings.$audioBitrate,
+		mimeType: settings.$mimeType,
+	});
 
 	mediaRecorder.ondataavailable = (ev) => {
 		if (ev.data.size > 0) {
@@ -39,10 +45,12 @@ const stopRecording = async () => {
 	mediaRecorder.stop();
 };
 
-const selectSource = async (): Promise<MediaStream> => {
+const selectSource = async (settings: Settings): Promise<MediaStream> => {
 	// TODO: configurable settings
 	const stream = await navigator.mediaDevices.getDisplayMedia({
-		video: true,
+		video: {
+			frameRate: settings.$fps,
+		},
 		audio: true,
 	});
 

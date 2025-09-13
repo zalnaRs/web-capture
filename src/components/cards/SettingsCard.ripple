@@ -1,0 +1,17 @@
+import type { Context, Settings } from '../../types.d';
+import Card from './Card.ripple';
+import NumberSelect from '../controls/NumberSelect.ripple';
+import {videoBitrateHelp, audioBitrateHelp, fpsHelp} from '../../lib/help'
+
+export default component SettingsCard(props: { $context: Context, $settings: Settings }) {
+    let $videoBitrateInKbps = props.$settings.$videoBitrate / 1000;
+    let $audioBitrateInKbps = props.$settings.$audioBitrate / 1000;
+
+    <Card>
+        <section id="settings-section">
+            <NumberSelect id='videoBitrate' label='Video Bitrate (Kbps)' min={1000} max={20 * 1000} $value={$videoBitrateInKbps} onChange={(v) => (props.$settings.$videoBitrate = v * 1000)} help={videoBitrateHelp} />
+            <NumberSelect id='audioBitrate' label='Audio Bitrate (Kbps)' min={8} max={1411} $value={$audioBitrateInKbps} onChange={(v) => (props.$settings.$audioBitrate = v * 1000)} help={audioBitrateHelp} />
+            <NumberSelect id='fps' label='FPS' min={15} max={240} $value={props.$settings.$fps} onChange={(v) => (props.$settings.$fps = v)} help={fpsHelp} />
+        </section>
+    </Card>
+}

@@ -1,12 +1,12 @@
 import Card from './Card.ripple';
-import RecordingControls from './RecordingControls.ripple';
-import type { Context } from '../types.d';
-import RecordingAPI from '../lib/index';
+import RecordingControls from '../controls/RecordingControls.ripple';
+import type { Context, Settings } from '../../types.d';
+import RecordingAPI from '../../lib/index';
 
-export default component PreviewCard(props: { $context: Context }) {
+export default component PreviewCard(props: { $context: Context, $settings: Settings }) {
 	<Card>
 		<div id='preview' onClick={() => {
-				if (!props.$context.$selectedSource) RecordingAPI.selectSource().then(v => props.$context.$selectedSource = v);
+				if (!props.$context.$selectedSource) RecordingAPI.selectSource(props.$settings).then(v => props.$context.$selectedSource = v);
 			}}>
 			if (props.$context.$selectedSource?.active) {
 				try {
@@ -27,6 +27,6 @@ export default component PreviewCard(props: { $context: Context }) {
 				</div>
 			}
 		</div>
-		<RecordingControls $context={props.$context} />
+		<RecordingControls $context={props.$context} $settings={props.$settings} />
 	</Card>
 }
