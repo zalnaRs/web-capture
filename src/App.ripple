@@ -3,24 +3,35 @@ import PreviewCard from './components/PreviewCard.ripple';
 import type { Context } from './types.d';
 
 export component App() {
-	let context: Context = {
-		$isRecording: false,
-	};
+	try {
+		let context: Context = {
+			$selectedSource: undefined,
+			$isRecording: false,
+		};
 
-	<main>
-		<h1>{'Web Capture'}</h1>
-		<PreviewCard $context={context} />
-	</main>
+		<main>
+			<h1>{'Web Capture'}</h1>
+			<PreviewCard $context={context} />
+			<button type="button" onClick={() => console.log(context)}>{'Debug'}</button>
+		</main>
 
-	/* <SettingsCard /> */
-	<style>
-	  main {
-			padding: 12px;
-			margin: auto 0;
-			max-width: 1280px;
-		}
-		  h1 {
-			margin-bottom: 12px;
-		}
-	</style>
+		/* <SettingsCard /> */
+		<style>
+		main {
+				padding: 12px;
+				margin: auto 0;
+				max-width: 1280px;
+			}
+			h1 {
+				margin-bottom: 12px;
+			}
+		</style>
+	} catch (err) {
+		console.error(err);
+
+		<main>
+			<h1>{'An error happened!'}</h1>
+			<code>{err}</code>
+		</main>
+	}
 }

@@ -1,16 +1,23 @@
 import Card from './Card.ripple';
 import RecordingControls from './RecordingControls.ripple';
 import type { Context } from '../types.d';
+import RecordingAPI from '../lib/index'
 
 export default component PreviewCard(props: { $context: Context }) {
 	<Card>
-		<div id='preview'>
-			if (props.$context.$selectedSource) {
-				<p>{'TODO: implement'}</p>
-			} else {
-				<img src="/icons/select_window.svg" alt="Select a source to record" />
-			}
-		</div>
+			<div id='preview' onClick={() => {
+				// TODO: switch to async, ripple bug
+				if (!props.$context.$selectedSource) 
+					RecordingAPI.selectSource().then((v) => props.$context.$selectedSource = v);
+			}}>
+				if (props.$context.$selectedSource?.active) {
+					<p>{'TODO: implement'}</p>
+				} else {
+					<div aria-role>
+						<img src="/icons/select_window.svg" alt="Select a source to record" />
+					</div>
+				}
+			</div>
 		<RecordingControls $context={props.$context} />
 	</Card>
 }

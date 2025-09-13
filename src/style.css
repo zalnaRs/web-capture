@@ -73,6 +73,7 @@ button {
 	}
 
 	& img {
+		user-select: none;
 		transition: all 0.4s var(--ease-in-out-expo);
 		width: 32px;
 	}
