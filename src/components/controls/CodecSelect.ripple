@@ -25,7 +25,7 @@ export default component CodecSelect(props: { $context: Context, $settings: Sett
             >
                 for (const setting of mimeTypes) {
                     if (MediaRecorder.isTypeSupported(setting.mimeType)) {
-                        if (!props.$settings.$mimeType) {
+                        if (props.$settings.$mimeType ?? props.$settings.$mimeType == "video/webm") {
                             props.$settings.$mimeType = setting.mimeType;
                         }
                         <option value={setting.mimeType}>{`${setting.video}+${setting.audio} in ${setting.container}`}</option>

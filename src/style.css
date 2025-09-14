@@ -74,6 +74,10 @@ button {
 		color: var(--white);
 	}
 
+	&:disabled {
+		opacity: 0.4;
+	}
+
 	&.icon-button {
 		background: transparent;
 		border: none;

@@ -16,7 +16,7 @@ export component App() {
 			$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
 			$fps: 60,
 			$audioBitrate: 160 * 1000, // 160 Kpbs
-			$mimeType: undefined,
+			$mimeType: "video/webm",
 
 			$skipCountdown: false
 		}
@@ -36,23 +36,12 @@ export component App() {
 				firstRun = false;
 			};
 		} catch (err) {
-			localStorage.setItem("done-saving-settings", "0")
 			console.warn("Couldn't load saved settings");
-			settings = {
-				$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
-				$fps: 60,
-				$audioBitrate: 160 * 1000, // 160 Kpbs
-				$mimeType: undefined,
-
-				$skipCountdown: false
-			};
 		}
 		
 		effect(() => {
 			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps, settings.$skipCountdown); // required as Ripple doesn't allow objects to be reactive
 			localStorage.setItem("settings", JSON.stringify(settings));
-			if (localStorage.getItem("done-saving-settings") != "1") location.reload();
-			localStorage.setItem("done-saving-settings", "1");
 		})
 
 		<main>
@@ -71,7 +60,6 @@ export component App() {
 				padding: 12px;
 				margin: auto 0;
 				max-width: 840px;
-				
 				display: flex;
 				justify-content: center;
 				align-items: center;
