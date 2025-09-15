@@ -2,13 +2,10 @@ import { Settings } from '../types';
 import { isFirefox } from './utils';
 
 let recordedChunks = [];
-let startTime: Number;
 
 let mediaRecorder: MediaRecorder;
 
 const startRecording = async (stream: MediaStream, settings: Settings) => {
-	startTime = new Date().getTime();
-
 	mediaRecorder = new MediaRecorder(stream, {
 		videoBitsPerSecond: settings.$videoBitrate,
 		audioBitsPerSecond: settings.$audioBitrate,
@@ -74,9 +71,6 @@ const RecordingAPI = {
 	stopRecording,
 	pauseRecording,
 	resumeRecording,
-	properties: {
-		startTime,
-	},
 };
 
 export default RecordingAPI;

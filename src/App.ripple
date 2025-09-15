@@ -13,19 +13,18 @@ export component App() {
 		};
 
 		let settings: Settings = {
-			$videoBitrate: 5 * 1000 * 1000, // 5 Mbps
+			$videoBitrate: 5 * 1000 * 1000,
 			$fps: 60,
-			$audioBitrate: 160 * 1000, // 160 Kpbs
-			$mimeType: "video/webm",
-
-			$skipCountdown: false
-		}
+			$audioBitrate: 160 * 1000,
+			$mimeType: 'video/webm',
+			$skipCountdown: false,
+		};
 
 		let firstRun = true;
 
 		try {
 			if (firstRun) {
-				const saved_settings = JSON.parse(localStorage.getItem("settings"));
+				const saved_settings = JSON.parse(localStorage.getItem('settings'));
 
 				settings.$videoBitrate = saved_settings.$videoBitrate;
 				settings.$audioBitrate = saved_settings.$audioBitrate;
@@ -34,29 +33,29 @@ export component App() {
 				settings.$skipCountdown = saved_settings.$skipCountdown;
 
 				firstRun = false;
-			};
+			}
+
 		} catch (err) {
-			console.warn("Couldn't load saved settings");
+			console.warn('Couldn\'t load saved settings');
 		}
-		
+
 		effect(() => {
-			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps, settings.$skipCountdown); // required as Ripple doesn't allow objects to be reactive
-			localStorage.setItem("settings", JSON.stringify(settings));
-		})
+			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps, settings.$skipCountdown);
+			localStorage.setItem('settings', JSON.stringify(settings));
+		});
 
 		<main>
 			<h1>{'Web Capture'}</h1>
 			<PreviewCard $context={context} $settings={settings} />
 			<SettingsCard $context={context} $settings={settings} />
-			
 			if (import.meta.env.DEV) {
-				<button type="button" onClick={() => console.log(context, settings)}>{'Debug'}</button>
+				<button type='button' onClick={() => console.log(context, settings)}>{'Debug'}</button>
 			}
 		</main>
 
 		/* <SettingsCard /> */
 		<style>
-			main {
+		  main {
 				padding: 12px;
 				margin: auto 0;
 				max-width: 840px;
@@ -66,19 +65,19 @@ export component App() {
 				flex-direction: column;
 				gap: 12px;
 			}
-			h1 {
+			  h1 {
 				margin-bottom: 12px;
 			}
 		</style>
 	} catch (err) {
 		console.error(err);
 
-		if (localStorage.getItem("done-saving-settings") == "1") {
+		if (localStorage.getItem('done-saving-settings') == '1') {
 			window.location.reload();
 		}
 
-		<main class="screen-center">
-			<img src="/icons/error.svg" alt="" />
+		<main class='screen-center'>
+			<img src='/icons/error.svg' alt='' />
 			<h1>{'An error happened!'}</h1>
 			<code>{err}</code>
 		</main>

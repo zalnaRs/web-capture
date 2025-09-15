@@ -1,10 +1,24 @@
 import type { Context, Settings } from '../../types.d';
-import RecordingAPI from '../../lib/index'
+import RecordingAPI from '../../lib/index';
+import { effect } from 'ripple';
 
 export default component RecordingControls(props: { $context: Context, $settings: Settings }) {
 	let $countdown = 0;
 
+	let durationInterval;
+	let $duration = -3600000;
+	let $durationDate = new Date(0);
+
+	effect(() => {
+		$durationDate = new Date($duration);
+	});
+
 	<section>
+		if (props.$context.$isRecording) {
+			<strong>
+				{`${$durationDate.getHours().toString().padStart(2, '0')}:${$durationDate.getMinutes().toString().padStart(2, '0')}:${$durationDate.getSeconds().toString().padStart(2, '0')}`}
+			</strong>
+		}
 		<button
 			id='main-button'
 			type='button'
@@ -22,14 +36,22 @@ export default component RecordingControls(props: { $context: Context, $settings
 						if (interval) clearInterval(interval);
 						RecordingAPI.startRecording(props.$context.$selectedSource, props.$settings);
 						props.$context.$isRecording = true;
+						$duration = -3600000;
+						durationInterval = setInterval(() => {
+							$duration += 1000;
+						}, 1000);
 						props.$context.$isPaused = false;
 					}, !props.$settings.$skipCountdown ? 3200 : 100)
 				} else {
 					if (props.$context.$isPaused) {
 						RecordingAPI.resumeRecording();
+						durationInterval = setInterval(() => {
+							$duration += 1000;
+						}, 1000);
 						props.$context.$isPaused = false;
 					} else {
 						RecordingAPI.pauseRecording();
+						clearInterval(durationInterval);
 						props.$context.$isPaused = true;
 					}
 				}
@@ -54,6 +76,7 @@ export default component RecordingControls(props: { $context: Context, $settings
 				onClick={() => {
 					RecordingAPI.stopRecording();
 					props.$context.$isRecording = false;
+					clearInterval(durationInterval);
 				}}
 				style="background: var(--background-3);border-radius:var(--rounded-1);"
 			>
