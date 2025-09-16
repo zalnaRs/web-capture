@@ -237,3 +237,88 @@ dialog::backdrop {
 		transform: translateY(0);
 	}
 }
+
+#main-button {
+	width: 60px;
+	height: 60px;
+	border: none;
+	outline: none;
+	border-radius: var(--rounded-full);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: var(--transition-base);
+	box-shadow: var(--shadow-sm);
+	font-size: var(--font-size-base);
+	font-weight: 500;
+}
+
+#main-button.start {
+	background: var(--primary);
+}
+
+#main-button.start:hover {
+	background: color-mix(in srgb, var(--primary) 90%, var(--black));
+}
+
+#main-button.recording {
+	background: var(--gray-200);
+}
+
+#main-button.recording:hover {
+	background: var(--gray-300);
+}
+
+#main-button.paused {
+	background: color-mix(in srgb, var(--danger) 20%, var(--white));
+}
+
+#main-button.paused:hover {
+	background: color-mix(in srgb, var(--danger) 30%, var(--white));
+}
+
+#main-button:hover {
+	transform: translateY(-2px);
+}
+
+#main-button:active {
+	transform: scale(0.95);
+}
+
+#main-button:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+#main-button strong {
+	color: var(--white);
+	font-size: var(--font-size-lg);
+}
+
+#main-button img {
+	width: 24px;
+	height: 24px;
+	user-select: none;
+}
+
+#stop-button {
+	width: 40px;
+	height: 40px;
+	background: var(--gray-200);
+	border-radius: var(--rounded-full);
+	transition: var(--transition-base);
+}
+
+#stop-button:hover {
+	background: var(--gray-300);
+	transform: translateY(-2px);
+}
+
+#stop-button:hover #stop-button:active {
+	transform: scale(0.95);
+}
+
+#stop-button img {
+	width: 20px;
+	height: 20px;
+}

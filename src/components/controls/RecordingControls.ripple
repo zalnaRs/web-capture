@@ -41,7 +41,7 @@ export default component RecordingControls(props: { $context: Context, $settings
 							$duration += 1000;
 						}, 1000);
 						props.$context.$isPaused = false;
-					}, !props.$settings.$skipCountdown ? 3200 : 100)
+					}, !props.$settings.$skipCountdown ? 3100 : 100)
 				} else {
 					if (props.$context.$isPaused) {
 						RecordingAPI.resumeRecording();
@@ -56,9 +56,7 @@ export default component RecordingControls(props: { $context: Context, $settings
 					}
 				}
 			}}
-			$style={`
-				background: ${props.$context.$isRecording ? props.$context.$isPaused ? '#ffa9a9' : '#E8E8E8' : '#FF4421'};
-			`}
+			$class={props.$context.$isRecording ? props.$context.$isPaused ? 'paused' : 'recording' : 'start'}
 			$disabled={!props.$context.$selectedSource?.active}
 		>
 			if ($countdown != 0) {
@@ -70,7 +68,7 @@ export default component RecordingControls(props: { $context: Context, $settings
 		if (props.$context.$isRecording) {
 			<button
 				class="icon-button"
-				id="stop_button"
+				id="stop-button"
 				type="button"
 				aria-label='Stop & save'
 				onClick={() => {
@@ -86,31 +84,20 @@ export default component RecordingControls(props: { $context: Context, $settings
 	</section>
 
 	<style>
-	  	section {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			gap: 12px;
-		}
-		#main-button {
-			width: 50px;
-			height: 50px;
-			border: none;
-			outline: none;
-			border-radius: var(--rounded-full);
-		}
+	section {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+	}
 
-		#main-button:active {
-			transform: scale(1.2);
-		}
-
-		#main-button:disabled {
-			opacity: 0.1;
-		}
-
-		#main-button strong {
-			color: var(--white);
-			font-size: 16px;
-		}
+	.timer {
+		font-size: var(--font-size-lg);
+		font-weight: 600;
+		color: var(--black);
+		padding: 8px 16px;
+		background: var(--gray-200);
+		border-radius: var(--rounded-sm);
+	}
 	</style>
 }
