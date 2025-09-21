@@ -23,6 +23,7 @@
 		"vite-plugin-ripple": "^0.2.59"
 	},
 	"dependencies": {
-		"ripple": "^0.2.59"
+		"ripple": "^0.2.59",
+		"vite-plugin-pwa": "^1.0.3"
 	}
 }
