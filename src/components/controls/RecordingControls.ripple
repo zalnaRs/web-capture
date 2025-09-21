@@ -1,71 +1,79 @@
 import type { Context, Settings } from '../../types.d';
 import RecordingAPI from '../../lib/index';
-import { effect } from 'ripple';
+import { effect, track } from 'ripple';
 
-export default component RecordingControls(props: { $context: Context, $settings: Settings }) {
-	let $countdown = 0;
+export default component RecordingControls(props: { context: Context, settings: Settings }) {
+	let countdown = track(0);
 
 	let durationInterval;
-	let $duration = -3600000;
-	let $durationDate = new Date(0);
+	let duration = track(-3600000);
+	let durationDate = track(new Date(0));
 
 	effect(() => {
-		$durationDate = new Date($duration);
+		@durationDate = new Date(@duration);
 	});
 
 	<section>
-		if (props.$context.$isRecording) {
+		if (props.context.@isRecording) {
 			<strong>
-				{`${$durationDate.getHours().toString().padStart(2, '0')}:${$durationDate.getMinutes().toString().padStart(2, '0')}:${$durationDate.getSeconds().toString().padStart(2, '0')}`}
+				{`${@durationDate.getHours().toString().padStart(2, '0')}:${@durationDate.getMinutes().toString().padStart(2, '0')}:${@durationDate.getSeconds().toString().padStart(2, '0')}`}
 			</strong>
 		}
 		<button
 			id='main-button'
 			type='button'
-			$aria-label={props.$isRecording ? 'Stop' : 'Start'}
+			aria-label={props.@isRecording ? 'Stop' : 'Start'}
 			onClick={() => {
-				if (!props.$context.$isRecording) {
+				if (!props.context.@isRecording) {
 					let interval;
-					if (!props.$settings.$skipCountdown) {
-						$countdown = 3;
+					if (!props.settings.@skipCountdown) {
+						@countdown = 3;
 						interval = setInterval(() => {
-							$countdown--;
+							@countdown--;
 						}, 1000);
 					}
 					setTimeout(() => {
 						if (interval) clearInterval(interval);
-						RecordingAPI.startRecording(props.$context.$selectedSource, props.$settings);
-						props.$context.$isRecording = true;
-						$duration = -3600000;
+
+						const settings: Settings = {
+							videoBitrate: props.settings.@videoBitrate,
+							fps: props.settings.@fps,
+							audioBitrate: props.settings.@audioBitrate,
+							mimeType: props.settings.@mimeType,
+						}
+
+						RecordingAPI.startRecording(props.context.@selectedSource, settings);
+						props.context.@isRecording = true;
+						@duration = -3600000;
 						durationInterval = setInterval(() => {
-							$duration += 1000;
+							@duration += 1000;
 						}, 1000);
-						props.$context.$isPaused = false;
-					}, !props.$settings.$skipCountdown ? 3100 : 100)
+						props.context.@isPaused = false;
+					}, !props.settings.@skipCountdown ? 3100 : 100)
 				} else {
-					if (props.$context.$isPaused) {
+					if (props.context.@isPaused) {
 						RecordingAPI.resumeRecording();
 						durationInterval = setInterval(() => {
-							$duration += 1000;
+							@duration += 1000;
 						}, 1000);
-						props.$context.$isPaused = false;
+						props.context.@isPaused = false;
 					} else {
 						RecordingAPI.pauseRecording();
 						clearInterval(durationInterval);
-						props.$context.$isPaused = true;
+						props.context.@isPaused = true;
 					}
 				}
 			}}
-			$class={props.$context.$isRecording ? props.$context.$isPaused ? 'paused' : 'recording' : 'start'}
-			$disabled={!props.$context.$selectedSource?.active}
+			class={props.context.@isRecording ? props.context.@isPaused ? 'paused' : 'recording' : 'start'}
+			disabled={!props.context.@selectedSource?.active}
 		>
-			if ($countdown != 0) {
-				<strong>{$countdown}</strong>
+			if (@countdown != 0) {
+				<strong>{@countdown}</strong>
 			} else {
-				<img $src={props.$context.$isRecording ? props.$context.$isPaused ? '/icons/resume.svg' : "/icons/paused.svg" : '/icons/start.svg'} alt='' />
+				<img src={props.context.@isRecording ? props.context.@isPaused ? '/icons/resume.svg' : "/icons/paused.svg" : '/icons/start.svg'} alt='' />
 			}
 		</button>
-		if (props.$context.$isRecording) {
+		if (props.context.@isRecording) {
 			<button
 				class="icon-button"
 				id="stop-button"
@@ -73,7 +81,7 @@ export default component RecordingControls(props: { $context: Context, $settings
 				aria-label='Stop & save'
 				onClick={() => {
 					RecordingAPI.stopRecording();
-					props.$context.$isRecording = false;
+					props.context.@isRecording = false;
 					clearInterval(durationInterval);
 				}}
 				style="background: var(--background-3);border-radius:var(--rounded-1);"

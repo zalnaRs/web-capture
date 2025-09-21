@@ -6,10 +6,11 @@ let recordedChunks = [];
 let mediaRecorder: MediaRecorder;
 
 const startRecording = async (stream: MediaStream, settings: Settings) => {
+	console.log(settings);
 	mediaRecorder = new MediaRecorder(stream, {
-		videoBitsPerSecond: settings.$videoBitrate,
-		audioBitsPerSecond: settings.$audioBitrate,
-		mimeType: isFirefox ? 'video/webm' : settings.$mimeType,
+		videoBitsPerSecond: settings.videoBitrate,
+		audioBitsPerSecond: settings.audioBitrate,
+		mimeType: isFirefox ? 'video/webm' : settings.mimeType,
 	});
 
 	mediaRecorder.ondataavailable = (ev) => {
@@ -55,7 +56,7 @@ const selectSource = async (settings: Settings): Promise<MediaStream> => {
 	// TODO: configurable settings
 	const stream = await navigator.mediaDevices.getDisplayMedia({
 		video: {
-			frameRate: settings.$fps,
+			frameRate: settings.fps,
 		},
 		audio: {
 			echoCancellation: false,

@@ -3,31 +3,30 @@ import RecordingControls from '../controls/RecordingControls.ripple';
 import type { Context, Settings } from '../../types.d';
 import RecordingAPI from '../../lib/index';
 
-export default component PreviewCard(props: { $context: Context, $settings: Settings }) {
+export default component PreviewCard(props: { context: Context, settings: Settings }) {
 	<Card>
 		<div id='preview' onClick={() => {
-				if (!props.$context.$selectedSource) RecordingAPI.selectSource(props.$settings).then(v => props.$context.$selectedSource = v);
+				if (!props.context.@selectedSource) RecordingAPI.selectSource(props.settings).then(v => props.context.@selectedSource = v);
 			}}>
-			if (props.$context.$selectedSource?.active) {
-				try {
-					<video muted={true} srcObject={props.$context.$selectedSource} autoplay={true}></video>
-					<button id='stop-preview-button' class="danger" type="button" $disabled={props.$context.$isRecording} onClick={() => {
-						setTimeout(() => props.$context.$selectedSource = undefined, 100);
+			try {
+				if (props.context.@selectedSource?.active) {
+					<video muted={true} srcObject={props.context.@selectedSource} autoplay={true}></video>
+					<button id='stop-preview-button' class="danger" type="button" disabled={props.context.@isRecording} onClick={() => {
+						setTimeout(() => props.context.@selectedSource = undefined, 100);
 					}}>{'Stop preview'}</button>
-				} catch (err) {
+				} else {
 					<div id="alert">
-						<img src='/icons/error.svg' alt='' />
-						<strong>{'Preview has crashed'}</strong>
+						<img src='/icons/select_window.svg' alt='Select a source to record' />
+						<strong>{'Select a source to continue'}</strong>
 					</div>
 				}
-
-			} else {
+			} catch (err) {
 				<div id="alert">
-					<img src='/icons/select_window.svg' alt='Select a source to record' />
-					<strong>{'Select a source to continue'}</strong>
+					<img src='/icons/error.svg' alt='' />
+					<strong>{'Preview has crashed'}</strong>
 				</div>
 			}
 		</div>
-		<RecordingControls $context={props.$context} $settings={props.$settings} />
+		<RecordingControls context={props.context} settings={props.settings} />
 	</Card>
 }

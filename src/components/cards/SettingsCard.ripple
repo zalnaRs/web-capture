@@ -5,24 +5,25 @@ import Checkbox from '../controls/Checkbox.ripple';
 import CodecSelect from '../controls/CodecSelect.ripple';
 import { videoBitrateHelp, audioBitrateHelp, fpsHelp } from '../../lib/help';
 import { isFirefox } from '../../lib/utils';
+import { track } from 'ripple';
 
-export default component SettingsCard(props: { $context: Context, $settings: Settings }) {
-    let $videoBitrateInKbps = props.$settings.$videoBitrate / 1000;
-    let $audioBitrateInKbps = props.$settings.$audioBitrate / 1000;
+export default component SettingsCard(props: { context: Context, settings: Settings }) {
+    let videoBitrateInKbps = track(() => props.settings.@videoBitrate / 1000);
+    let audioBitrateInKbps = track(() => props.settings.@audioBitrate / 1000);
 
     <Card>
         <section id="settings-section">
-            <NumberSelect $disabled={props.$context.$isRecording} id='videoBitrate' $label='Video Bitrate (Kbps)' min={1000} max={20 * 1000} $value={$videoBitrateInKbps} onChange={(v) => (props.$settings.$videoBitrate = v * 1000)} help={videoBitrateHelp} />
+            <NumberSelect disabled={props.context.@isRecording} id='videoBitrate' label='Video Bitrate (Kbps)' min={1000} max={20 * 1000} value={@videoBitrateInKbps} onChange={(v) => (props.settings.@videoBitrate = v * 1000)} help={videoBitrateHelp} />
             if (!isFirefox) {
-                <NumberSelect $disabled={props.$context.$isRecording} id='audioBitrate' $label='Audio Bitrate (Kbps)' min={8} max={1411} $value={$audioBitrateInKbps} onChange={(v) => (props.$settings.$audioBitrate = v * 1000)} help={audioBitrateHelp} />
+                <NumberSelect disabled={props.context.@isRecording} id='audioBitrate' label='Audio Bitrate (Kbps)' min={8} max={1411} value={@audioBitrateInKbps} onChange={(v) => (props.settings.@audioBitrate = v * 1000)} help={audioBitrateHelp} />
             }
-            <NumberSelect $disabled={props.$context.$selectedSource?.active} id='fps' $label={props.$context.$selectedSource?.active ? 'FPS (stop preview to change)' : 'FPS'} min={15} max={240} $value={props.$settings.$fps} onChange={(v) => (props.$settings.$fps = v)} help={fpsHelp} />
+            <NumberSelect disabled={props.context.@selectedSource?.active} id='fps' label={props.context.@selectedSource?.active ? 'FPS (stop preview to change)' : 'FPS'} min={15} max={240} value={props.settings.@fps} onChange={(v) => (props.settings.@fps = v)} help={fpsHelp} />
 
-            <CodecSelect $context={props.$context} $settings={props.$settings} />
+            <CodecSelect context={props.context} settings={props.settings} />
 
             <hr />
 
-            <Checkbox id='skipCountdown' $label='Skip Countdown?' $value={props.$settings.$skipCountdown} onChange={(v) => props.$settings.$skipCountdown = v} />
+            <Checkbox id='skipCountdown' label='Skip Countdown?' value={props.settings.@skipCountdown} onChange={(v) => props.settings.@skipCountdown = v} />
         </section>
     </Card>
 }

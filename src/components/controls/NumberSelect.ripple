@@ -1,16 +1,16 @@
 import HelpDialog from '../HelpDialog.ripple';
 
-export default component NumberSelect(props: { $disabled?: boolean, id: string, min: Number, max: Number, $label: string, onChange: (v: Number) => void, $value: Number, help?: string }) {
+export default component NumberSelect(props: { disabled?: boolean, id: string, min: Number, max: Number, label: string, onChange: (v: Number) => void, value: Number, help?: string }) {
     <div id="number-select">
         if (props.help) { 
             <div id="help-label">
-                <label for={props.id + "-number"}>{props.$label}</label>
-                <HelpDialog topic={props.$label}>
+                <label for={props.id + "-number"}>{props.label}</label>
+                <HelpDialog topic={props.label}>
                     <p>{props.help}</p>
                 </HelpDialog>
             </div>
         } else {
-            <label for={props.id + "-number"}>{props.$label}</label>
+            <label for={props.id + "-number"}>{props.label}</label>
         }
         <div id="input">
             <input
@@ -20,9 +20,9 @@ export default component NumberSelect(props: { $disabled?: boolean, id: string, 
                 name={props.id}
                 min={props.min}
                 max={props.max}
-                $value={props.$value}
+                value={props.value}
                 onChange={(e) => props.onChange(e.target.value ?? 0)}
-                $disabled={props.$disabled}
+                disabled={props.disabled}
             />
             <input
                 type="number"
@@ -30,9 +30,9 @@ export default component NumberSelect(props: { $disabled?: boolean, id: string, 
                 name={props.id + "-number"}
                 min={props.min}
                 max={props.max}
-                $value={props.$value}
+                value={props.value}
                 onChange={(e) => props.onChange(e.target.value ?? 0)}
-                $disabled={props.$disabled}
+                disabled={props.disabled}
             />
         </div>
     </div>

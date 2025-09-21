@@ -1,23 +1,23 @@
 import PreviewCard from './components/cards/PreviewCard.ripple';
 import SettingsCard from './components/cards/SettingsCard.ripple';
 import type { Context, Settings } from './types.d';
-import { effect } from 'ripple';
+import { effect, track } from 'ripple';
 
 export component App() {
 	try {
 		let context: Context = {
-			$selectedSource: undefined,
-			$isRecording: false,
-			$isPaused: false,
-			$previewURL: undefined,
+			selectedSource: track(undefined),
+			isRecording: track(false),
+			isPaused: track(false),
+			previewURL: track(undefined),
 		};
 
 		let settings: Settings = {
-			$videoBitrate: 5 * 1000 * 1000,
-			$fps: 60,
-			$audioBitrate: 160 * 1000,
-			$mimeType: 'video/webm',
-			$skipCountdown: false,
+			videoBitrate: track(5 * 1000 * 1000),
+			fps: track(60),
+			audioBitrate: track(160 * 1000),
+			mimeType: track('video/webm'),
+			skipCountdown: track(false),
 		};
 
 		let firstRun = true;
@@ -26,11 +26,11 @@ export component App() {
 			if (firstRun) {
 				const saved_settings = JSON.parse(localStorage.getItem('settings'));
 
-				settings.$videoBitrate = saved_settings.$videoBitrate;
-				settings.$audioBitrate = saved_settings.$audioBitrate;
-				settings.$mimeType = saved_settings.$mimeType;
-				settings.$fps = saved_settings.$fps;
-				settings.$skipCountdown = saved_settings.$skipCountdown;
+				settings.@videoBitrate = saved_settings.videoBitrate;
+				settings.@audioBitrate = saved_settings.audioBitrate;
+				settings.@mimeType = saved_settings.mimeType;
+				settings.@fps = saved_settings.fps;
+				settings.@skipCountdown = saved_settings.skipCountdown;
 
 				firstRun = false;
 			}
@@ -40,35 +40,29 @@ export component App() {
 		}
 
 		effect(() => {
-			console.log(settings.$videoBitrate, settings.$audioBitrate, settings.$mimeType, settings.$fps, settings.$skipCountdown);
-			localStorage.setItem('settings', JSON.stringify(settings));
+			console.log(settings.@videoBitrate, settings.@audioBitrate, settings.@mimeType, settings.@fps, settings.@skipCountdown);
+			try {
+				const _settings: Settings = {
+					videoBitrate: settings.@videoBitrate,
+					audioBitrate: settings.@audioBitrate,
+					fps: settings.@fps,
+					mimeType: settings.@mimeType,
+					skipCountdown: settings.@skipCountdown,
+				}
+				localStorage.setItem('settings', JSON.stringify(_settings));
+			} catch (err) {
+				console.error("failed to save settings", err)
+			}
 		});
 
 		<main>
 			<h1>{'Web Capture'}</h1>
-			<PreviewCard $context={context} $settings={settings} />
-			<SettingsCard $context={context} $settings={settings} />
+			<PreviewCard context={context} settings={settings} />
+			<SettingsCard context={context} settings={settings} />
 			if (import.meta.env.DEV) {
 				<button type='button' onClick={() => console.log(context, settings)}>{'Debug'}</button>
 			}
 		</main>
-
-		/* <SettingsCard /> */
-		<style>
-		  main {
-				padding: 12px;
-				margin: auto 0;
-				max-width: 840px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-direction: column;
-				gap: 12px;
-			}
-			  h1 {
-				margin-bottom: 12px;
-			}
-		</style>
 	} catch (err) {
 		console.error(err);
 
@@ -82,4 +76,20 @@ export component App() {
 			<code>{err}</code>
 		</main>
 	}
+
+	<style>
+	main {
+		padding: 12px;
+		margin: auto 0;
+		max-width: 840px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		gap: 12px;
+	}
+	h1 {
+		margin-bottom: 12px;
+	}
+	</style>
 }

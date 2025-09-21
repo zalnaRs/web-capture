@@ -1,13 +1,13 @@
 import type { Component } from '../../lib/types.d'
 
-export default component Admonition(props: { $children: Component, type: "info" | "warning" | "danger" }) {
+export default component Admonition(props: { children: Component, type: "info" | "warning" | "danger" }) {
     <article class={props.type}>
         <header>
-            <img src={`/icons/${props.type}.svg`} alt="" />
+            <img src={`/icons/@{props.type}.svg`} alt="" />
             <h4>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</h4>
         </header>
         <div id="content">
-            <props.$children />
+            <props.children />
         </div>
     </article>
 

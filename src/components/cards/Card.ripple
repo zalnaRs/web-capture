@@ -1,5 +1,5 @@
-export default component Card(props: { $children: Component }) {
-	<div class="card"><props.$children /></div>
+export default component Card(props: { children: Component }) {
+	<div class="card"><props.children /></div>
 
 	<style>
 	  .card {
