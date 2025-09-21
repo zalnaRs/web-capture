@@ -6,7 +6,9 @@ It's also written in a Ripple (https://www.ripplejs.com/), which is a new fast f
 ## Features
 
 - Preview a source (browser tab, window or screen)
-- Record in VP8 webm
+- Record in most formats, which your browser supports
+- Dark mode
+- Service worker
 
 ## Future
 
@@ -17,18 +19,18 @@ There is a lot of stuff to get working, like configuring settings, using ffmpeg-
 1. Install dependencies:
 
     ```bash
-    npm install # or pnpm or yarn
+    bun install # or pnpm or npm or yarn
     ```
 
 2. Start the development server:
 
     ```bash
-    npm run dev
+    bun run dev
     ```
 
 3. Build for production:
     ```bash
-    npm run build
+    bun run build
     ```
 
 ### Code Formatting
