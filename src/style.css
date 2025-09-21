@@ -58,6 +58,17 @@ body {
 	line-height: 1.5;
 }
 
+main {
+	padding: 12px;
+	margin: auto 0;
+	max-width: 840px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 12px;
+}
+
 button {
 	cursor: pointer;
 	transition: var(--transition-base);
@@ -327,9 +338,6 @@ dialog::backdrop {
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-	}
-
 	html,
 	body {
 		background: var(--gray-800);

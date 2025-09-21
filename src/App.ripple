@@ -78,16 +78,6 @@ export component App() {
 	}
 
 	<style>
-	main {
-		padding: 12px;
-		margin: auto 0;
-		max-width: 840px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		gap: 12px;
-	}
 	h1 {
 		margin-bottom: 12px;
 	}

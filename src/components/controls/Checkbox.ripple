@@ -5,7 +5,7 @@ export default component Checkbox(props: { disabled?: boolean, id: string, label
             type="checkbox"
             id={props.id}
             name={props.id}
-            checked={props.@value}
+            checked={props.value}
             onChange={(e) => props.onChange(e.target.checked ?? 0)}
             disabled={props.@disabled}
         />
